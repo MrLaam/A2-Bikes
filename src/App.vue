@@ -2,10 +2,10 @@
   <div id="app">
     <Header></Header>
     <div class="main-container">
-      <div class="filter-container">
-        <Filter></Filter>
+      <div class="left-container">
+      <FilterContainer></FilterContainer>
       </div>
-      <div class="cards-container">
+      <div class="right-container">
         
       </div>
     </div>
@@ -14,13 +14,13 @@
 
 <script>
 import Header from './components/Header.vue'
-import Filter from './components/Filter.vue'
+import FilterContainer from './components/FilterContainer.vue'
 
 export default {
   name: 'app',
   components: {
     Header,
-    Filter
+    FilterContainer
   }
 }
 </script>
@@ -38,13 +38,14 @@ export default {
   display: flex;
 }
 
-.filter-container {
+.left-container {
+  height: 100px;
   margin: 10px;
   border: 1px solid red;
   flex-grow: 1
 }
 
-.cards-container {
+.right-container {
   margin: 10px;
   border: 1px solid red;
   flex-grow: 3

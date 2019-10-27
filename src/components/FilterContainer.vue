@@ -1,12 +1,12 @@
 <template>
-  
+<div>Test</div>
 </template>
 
 <script>
 import FilterCategory from './FilterCategory.vue'
 
 export default {
-  name: 'Filter',
+  name: 'FilterContainer',
   components: {
     FilterCategory
   }
