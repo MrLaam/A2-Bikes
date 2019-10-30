@@ -6,7 +6,7 @@
       <FilterContainer></FilterContainer>
       </div>
       <div class="right-container">
-        
+        <div>Hello</div>
       </div>
     </div>
   </div>
@@ -36,18 +36,18 @@ export default {
 .main-container {
   margin: 30px;
   display: flex;
+  justify-content: space-between;
 }
 
 .left-container {
-  height: 100px;
   margin: 10px;
   border: 1px solid red;
-  flex-grow: 1
+  flex: 0 0 25em;
 }
 
 .right-container {
   margin: 10px;
   border: 1px solid red;
-  flex-grow: 3
+  flex: 1;
 }
 </style>
