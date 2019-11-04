@@ -4,10 +4,12 @@
     <h4 class="category-title" v-if="filter.type !== 'model'">{{filter.name}}</h4>
     <h4 class="category-title" v-if="filter.type === 'model'">Model</h4>
     </div>
-    <select :disabled="filter.type !== 'other' && filter.type !== 'make' && (filter.type === 'model' && selectedMake === '')" @change="onFilterSelect($event, filter)" class="category-dropdown">
-      <option value="" disabled selected>Any</option>
+    <div class="category-dropdown-container">
+    <select class="category-dropdown" :disabled="filter.type !== 'other' && filter.type !== 'make' && (filter.type === 'model' && selectedMake === '')" @change="onFilterSelect($event, filter)">
+      <option value="" selected>{{filter.name}} (Any)</option>
       <option v-for="value in filter.values" v-bind:key="value">{{value}}</option>
     </select>
+    </div>
   </div>
 </template>
 
@@ -36,20 +38,31 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .category-container {
-border: 1px solid red;
-display: flex;
+border-bottom: 1px solid #D3D3D3;
+padding: 0 0 20px 7px;
 }
 
 .category-title-container {
-  flex: 1;
-  
+
+}
+
+.category-dropdown-container {
+    padding: 0 0 0 5px;
 }
 
 .category-title {
-  padding: 0 0 0 5px;
+  padding: 0 0 0 3px;
 }
 
 .category-dropdown {
-  flex: 1;
+  width: 90%;
+  text-align: center;
+  height: 30px;
+  background: url(../assets/dropdown.png) no-repeat right white;
+  background-origin: content-box;
+  background-size: 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0 4px;
 }
 </style>

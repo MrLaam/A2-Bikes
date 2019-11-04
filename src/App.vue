@@ -6,7 +6,9 @@
       <FilterContainer></FilterContainer>
       </div>
       <div class="right-container">
-        <div>Hello</div>
+        <div>
+          <BikeCard v-for="bike in filteredBikes" v-bind:key="bike.model" :bike=bike></BikeCard>
+        </div>
       </div>
     </div>
   </div>
@@ -15,12 +17,23 @@
 <script>
 import Header from './components/Header.vue'
 import FilterContainer from './components/FilterContainer.vue'
+import BikeCard from './components/BikeCard.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'app',
   components: {
     Header,
-    FilterContainer
+    FilterContainer,
+    BikeCard
+  },
+  mounted: function() {
+    this.$store.dispatch("retrieveBikes");
+  },
+  computed: {
+    ...mapGetters({
+      filteredBikes: 'getFilteredBikes'
+    })
   }
 }
 </script>
@@ -34,20 +47,21 @@ export default {
 }
 
 .main-container {
-  margin: 30px;
+  margin: 30px 375px 30px 375px;
   display: flex;
   justify-content: space-between;
 }
 
 .left-container {
   margin: 10px;
-  border: 1px solid red;
-  flex: 0 0 25em;
+  border: 1px solid #D3D3D3;
+  flex: 0 0 15em;
+  height: fit-content;
 }
 
 .right-container {
-  margin: 10px;
-  border: 1px solid red;
+  margin: 10px 10px 10px 20px;
+  border: 1px solid #D3D3D3;
   flex: 1;
 }
 </style>
