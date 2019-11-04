@@ -47,7 +47,7 @@ export default {
 }
 
 .main-container {
-  margin: 30px 375px 30px 375px;
+  margin: 30px 475px 30px 475px;
   display: flex;
   justify-content: space-between;
 }
