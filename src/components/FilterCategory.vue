@@ -21,14 +21,12 @@ export default {
   props: ["filter"],
   methods: {
     onFilterSelect(event, filter) {
-      if(filter.type === 'make') {
-        this.$store.commit("setMake", event.target.value)
-      }
+      this.$store.commit("addFilter", {name: filter.name, value: event.target.value, type: filter.type})
     }
   },
   computed: {
     ...mapGetters({
-      selectedMake: 'getMake'
+      selectedMake: 'getSelectedMake'
     })
   }
 }

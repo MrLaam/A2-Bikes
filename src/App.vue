@@ -53,14 +53,14 @@ export default {
 }
 
 .left-container {
-  margin: 10px;
+  margin: 10px 25px 10px 10px;
   border: 1px solid #D3D3D3;
   flex: 0 0 15em;
   height: fit-content;
 }
 
 .right-container {
-  margin: 10px 10px 10px 20px;
+  margin: 10px 10px 10px 25px;
   border: 1px solid #D3D3D3;
   flex: 1;
 }
