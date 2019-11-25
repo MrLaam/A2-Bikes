@@ -1,13 +1,21 @@
 <template>
-  <div class="category-container" v-if="(filter.type === 'other' || filter.type === 'make') || (filter.name === 'Model' && selectedMake === '') || (selectedMake === filter.name)">
+  <div class="category-container">
     <div class="category-title-container">
     <h4 class="category-title" v-if="filter.type !== 'model'">{{filter.name}}</h4>
     <h4 class="category-title" v-if="filter.type === 'model'">Model</h4>
     </div>
     <div class="category-dropdown-container">
-    <select class="category-dropdown" :disabled="filter.type !== 'other' && filter.type !== 'make' && (filter.type === 'model' && selectedMake === '')" @change="onFilterSelect($event, filter)">
+    <select class="category-dropdown" :disabled="(filter.name === 'Model') && !selectedMake" @change="onFilterSelect($event, filter)">
       <option value="" selected>{{filter.name}} (Any)</option>
-      <option v-for="value in filter.values" v-bind:key="value">{{value}}</option>
+      
+      <template v-if="filter.name !== 'Model'">
+        <option v-for="value in filter.values" v-bind:key="value">{{value}}</option>
+      </template>
+
+      <template v-if="filter.name === 'Model'">
+        <option  v-for="value in filter.values[selectedMake]" v-bind:key="value">{{value}}</option>
+      </template>
+      
     </select>
     </div>
   </div>

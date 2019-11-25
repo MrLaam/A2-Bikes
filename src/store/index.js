@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    selectedMake: '',
     filters: [
       {
         type: "make",
@@ -14,27 +15,16 @@ export default new Vuex.Store({
       {
         type: "model",
         name: "Model",
-        values: []
-      },
-      {
-        type: "model",
-        name: "BMW",
-        values: ["G310R", "G310GS", "S1000R"]
-      },
-      {
-        type: "model",
-        name: "KTM",
-        values: ["Duke 125", "RC390"]
-      },
-      {
-        type: "model",
-        name: "Yamaha",
-        values: ["R3", "R6", "R1"]
+        values: {
+          "BMW": ["G310R", "G310GS", "S1000R"],
+          "KTM": ["Duke 125", "RC390", "Duke 790"],
+          "Yamaha": ["R3", "R6", "R1"]
+        }
       },
       {
         type: "other",
         name: "Max Price",
-        values: [1234, 1233, 5515]
+        values: [2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000]
       },
       {
         type: "other",
@@ -57,7 +47,7 @@ export default new Vuex.Store({
       {
         make: "BMW",
         model: "G310R (2017-2019)",
-        Price : 4300,
+        price: 4400,
         maxSecsTo60: 6.5,
         engineType: "Single",
         bikeType: "Naked",
@@ -70,7 +60,7 @@ export default new Vuex.Store({
         price: 12000,
         maxSecsTo60: 2.7,
         engineType: "Inline-four",
-        bikeType: "Supersports",
+        bikeType: "supersport",
         img: "https://auto.ndtvimg.com/bike-images/big/bmw/s-1000-r/bmw-s-1000-r.jpg?v=4",
         power: 205
       },
@@ -100,7 +90,7 @@ export default new Vuex.Store({
         price: 4100,
         maxSecsTo60: 4.6,
         engineType: "Single",
-        bikeType: "Supersports",
+        bikeType: "supersport",
         img: "https://cdn2.yamaha-motor.eu/prod/product-assets/2020/YZF600R6/2020-Yamaha-YZF600R6-EU-Icon_Blue-Studio-001-03_Mobile.jpg",
         power: 43
       },
@@ -120,7 +110,7 @@ export default new Vuex.Store({
         price: 5300,
         maxSecsTo60: 5.2,
         engineType: "Parallel Twin",
-        bikeType: "Supersports",
+        bikeType: "supersport",
         img: "https://cdn2.yamaha-motor.eu/prod/product-assets/2020/YZF600R6/2020-Yamaha-YZF600R6-EU-Icon_Blue-Studio-001-03_Mobile.jpg",
         power: 43
       },
@@ -130,7 +120,7 @@ export default new Vuex.Store({
         price: 10000,
         maxSecsTo60: 3.9,
         engineType: "Inline-four",
-        bikeType: "Supersports",
+        bikeType: "supersport",
         img: "https://cdn2.yamaha-motor.eu/prod/product-assets/2020/YZF600R6/2020-Yamaha-YZF600R6-EU-Icon_Blue-Studio-001-03_Mobile.jpg",
         power: 120
       },
@@ -140,7 +130,7 @@ export default new Vuex.Store({
         price: 16000,
         maxSecsTo60: 2.7,
         engineType: "Inline-four",
-        bikeType: "Supersports",
+        bikeType: "supersport",
         img: "https://cdn2.yamaha-motor.eu/prod/product-assets/2020/YZF600R6/2020-Yamaha-YZF600R6-EU-Icon_Blue-Studio-001-03_Mobile.jpg",
         power: 220
       }
@@ -152,26 +142,18 @@ export default new Vuex.Store({
       let shouldAddFilter = true;
 
       state.filteredBikes = state.allBikes;
-      
+
       if (state.appliedFilters.length > 0) {
         for (var x = 0; x < state.appliedFilters.length; x++) {
 
           if (state.appliedFilters[x].name === filter.name) {
             shouldAddFilter = false;
             state.appliedFilters[x].value = filter.value;
-            checkResetModelFilter(state, filter);
+            checkFilterReset(state, filter);
           }
         }
       } else {
         shouldAddFilter = false;
-         state.appliedFilters.push({
-          name: filter.name,
-          value: filter.value,
-          type: filter.type
-        }) 
-      }
-
-      if(shouldAddFilter){
         state.appliedFilters.push({
           name: filter.name,
           value: filter.value,
@@ -179,31 +161,53 @@ export default new Vuex.Store({
         })
       }
 
-      for (var y = 0; y < state.appliedFilters.length; y++) {
-        switch (state.appliedFilters[y].name) {
-          case "Make":
-            console.log(state.appliedFilters[y].value)
-            if(state.appliedFilters[y].value === ""){
-              state.filteredBikes = state.allBikes;
-            } else {
-              state.filteredBikes = state.filteredBikes.filter((bike) => {
-              return bike.make === state.appliedFilters[y].value;
-            });
-            }
-            break;
-          case "BMW": case "KTM": case "Yamaha":
-            state.filteredBikes = state.filteredBikes.filter((bike) => {
-              return bike.model.indexOf(state.appliedFilters[y].value) !== -1;
-            });
-            break;
-        }
+      if (shouldAddFilter) {
+        state.appliedFilters.push({
+          name: filter.name,
+          value: filter.value,
+          type: filter.type
+        })
+      }
 
+      var filterNoToSkip = []
+      for (var y = 0; y < state.appliedFilters.length; y++) {
+        if (state.appliedFilters[y].value === "") {
+          filterNoToSkip.push(y)
+        }
+      }
+
+      for (var y = 0; y < state.appliedFilters.length; y++) {
+        console.log(state.appliedFilters[y].name);
+
+        if (filterNoToSkip.includes(y)) {
+          continue
+        } else {
+          switch (state.appliedFilters[y].name) {
+            case "Make":
+              {
+                state.filteredBikes = state.filteredBikes.filter((bike) => {
+                  return bike.make === state.appliedFilters[y].value;
+                });
+              }
+              break;
+            case "Model":
+              state.filteredBikes = state.filteredBikes.filter((bike) => {
+                return bike.model.indexOf(state.appliedFilters[y].value) !== -1;
+              });
+              break;
+            case "Max Price":
+              state.filteredBikes = state.filteredBikes.filter((bike) => {
+                return bike.price <= state.appliedFilters[y].value;
+              })
+              break;
+          }
+        }
       }
 
     },
     setFilteredBikes(state, allBikes) {
       state.filteredBikes = allBikes;
-    }
+    },
   },
   actions: {
     retrieveBikes({ commit, state }) {
@@ -213,7 +217,6 @@ export default new Vuex.Store({
   },
   getters: {
     getFilters(state) {
-      console.log(state)
       return state.filters
     },
     getSelectedMake(state) {
@@ -231,12 +234,45 @@ export default new Vuex.Store({
   }
 })
 
-function checkResetModelFilter(state, filter) {
+function checkFilterReset(state, filter) {
+  // var filterToReset;
+  // var filterTypeToReset;
+
+  // switch (filter.name) {
+  //   case "Make":
+  //     filterToReset = "Make"
+  //     filterTypeToReset = "make"
+  //     break
+  //   case "Max Price":
+  //     filterToReset = "Max Price"
+  //     filterTypeToReset = "other"
+  //     break
+  // }
+
+  // if (filter.name === filterToReset) {
+  //   for (var x = 0; x < state.appliedFilters.length; x++) {
+  //     if (state.appliedFilters[x].type === filterTypeToReset) {
+  //       state.appliedFilters.splice(x, x + 1);
+  //     }
+  //   }
+  // }
+
+
   if (filter.name === "Make") {
     for (var x = 0; x < state.appliedFilters.length; x++) {
       if (state.appliedFilters[x].type === "model") {
-         state.appliedFilters.splice(x, x + 1);
+        state.appliedFilters.splice(x, x + 1);
       }
     }
-  }
+  } /*else if (filter.name === "Max Price") {
+    for (var x = 0; x < state.appliedFilters.length; x++) {
+      if (!filter.value) {
+        state.appliedFilters.splice(x, x + 1);
+        console.log(state.appliedFilters)
+      }
+    }
+  }*/
+
+
+  //TODO: Fix issue when any filter resets, make it filter properly
 }
