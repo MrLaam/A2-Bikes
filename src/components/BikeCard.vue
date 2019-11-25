@@ -8,7 +8,6 @@
       <h3>{{bike.make}} {{bike.model}}</h3>
       <p>RRP £{{bike.price}}</p>
       <p>{{bike.power}}hp</p>
-      <p>0-60 in {{bike.maxSecsTo60}}s</p>
       <p>{{bike.engineType}}</p>
       <p>{{bike.bikeType}}</p>
     </div>
