@@ -125,6 +125,7 @@ export default new Vuex.Store({
   },
   mutations: {
     addFilter(state, filter) {
+
       let shouldAddFilter = true;
 
       state.filteredBikes = state.allBikes;
@@ -135,7 +136,7 @@ export default new Vuex.Store({
           if (state.appliedFilters[x].name === filter.name) {
             shouldAddFilter = false;
             state.appliedFilters[x].value = filter.value;
-            checkFilterReset(state, filter);
+            checkModelReset(state, filter);
           }
         }
       } else {
@@ -155,51 +156,40 @@ export default new Vuex.Store({
         })
       }
 
-      var filterNoToSkip = []
-      for (var y = 0; y < state.appliedFilters.length; y++) {
-        if (state.appliedFilters[y].value === "") {
-          filterNoToSkip.push(y)
-        }
-      }
+      checkFilterReset(state, filter);
 
       for (var y = 0; y < state.appliedFilters.length; y++) {
-        console.log(state.appliedFilters[y].name);
 
-        if (filterNoToSkip.includes(y)) {
-          continue
-        } else {
-          switch (state.appliedFilters[y].name) {
-            case "Make":
-              {
-                state.filteredBikes = state.filteredBikes.filter((bike) => {
-                  return bike.make === state.appliedFilters[y].value;
-                });
-              }
-              break;
-            case "Model":
+        switch (state.appliedFilters[y].name) {
+          case "Make":
+            {
               state.filteredBikes = state.filteredBikes.filter((bike) => {
-                return bike.model.indexOf(state.appliedFilters[y].value) !== -1;
+                return bike.make === state.appliedFilters[y].value;
               });
-              break;
-            case "Max Price":
-              state.filteredBikes = state.filteredBikes.filter((bike) => {
-                return bike.price <= state.appliedFilters[y].value;
-              })
-              break;
-            case "Engine Type":
-              state.filteredBikes = state.filteredBikes.filter((bike) => {
-                return bike.engineType === state.appliedFilters[y].value;
-              })
-              break;
-            case "Bike Type":
-              state.filteredBikes = state.filteredBikes.filter((bike) => {
-                return bike.bikeType === state.appliedFilters[y].value;
-              })
-              break;
-          }
+            }
+            break;
+          case "Model":
+            state.filteredBikes = state.filteredBikes.filter((bike) => {
+              return bike.model.indexOf(state.appliedFilters[y].value) !== -1;
+            });
+            break;
+          case "Max Price":
+            state.filteredBikes = state.filteredBikes.filter((bike) => {
+              return bike.price <= state.appliedFilters[y].value;
+            })
+            break;
+          case "Engine Type":
+            state.filteredBikes = state.filteredBikes.filter((bike) => {
+              return bike.engineType === state.appliedFilters[y].value;
+            })
+            break;
+          case "Bike Type":
+            state.filteredBikes = state.filteredBikes.filter((bike) => {
+              return bike.bikeType === state.appliedFilters[y].value;
+            })
+            break;
         }
       }
-
     },
     setFilteredBikes(state, allBikes) {
       state.filteredBikes = allBikes;
@@ -230,7 +220,7 @@ export default new Vuex.Store({
   }
 })
 
-function checkFilterReset(state, filter) {
+function checkModelReset(state, filter) {
   if (filter.name === "Make") {
     for (var x = 0; x < state.appliedFilters.length; x++) {
       if (state.appliedFilters[x].type === "model") {
@@ -238,5 +228,12 @@ function checkFilterReset(state, filter) {
       }
     }
   }
+}
 
+function checkFilterReset(state) {
+  for (let x = 0; x < state.appliedFilters.length; x++) {
+    if (state.appliedFilters[x].value === "") {
+      state.appliedFilters.splice(x, 1)
+    }
+  }
 }

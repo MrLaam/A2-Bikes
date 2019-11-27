@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <img class="header-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1184px-Vue.js_Logo_2.svg.png"/>
+    <h1 class="header-logo">A2 Bikes</h1>
     <label class="header-contact">Contact</label>
   </div>
 </template>
@@ -21,8 +21,12 @@ export default {
   }
 
   .header-logo {
-    height: 60%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: black;
+    vertical-align: middle;
     padding-top: 15px;
+    padding-bottom: 15px;
+     margin: 0
   }
 
   .header-contact {

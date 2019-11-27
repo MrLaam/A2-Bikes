@@ -32,6 +32,8 @@ export default {
       this.$store.commit("addFilter", {name: filter.name, value: event.target.value, type: filter.type})
     }
   },
+  mutations: {
+  },
   computed: {
     ...mapGetters({
       selectedMake: 'getSelectedMake'
