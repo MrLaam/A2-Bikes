@@ -1,7 +1,7 @@
 <template>
   <div class="header-container">
     <img class="header-logo" src="../assets/logo.png" />
-    <label class="header-contact">Contact</label>
+    <p class="header-about">Project by Jordan Lam</p>
   </div>
 </template>
 
@@ -29,11 +29,10 @@ export default {
      margin: 0;
   }
 
-  .header-contact {
+  .header-about {
     position: absolute;
     right: 110px;
-    top: 15px;
+    top: 10px;
     font-weight: bold;
-    cursor: pointer;
   }
 </style>

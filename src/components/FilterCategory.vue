@@ -82,4 +82,5 @@ export default {
 .category-dropdown-container {
   padding: 0 0 0 5px;
 }
+
 </style>

@@ -32,16 +32,19 @@ export default {
 .bike-image-container {
   flex: 1;
   text-align: center;
+  margin: 10px 0 10px;
 }
 
 .bike-image-container img {
-  height: 175px;
+  width: 90%;
+  height: auto;
   vertical-align: middle;
 }
 
 .bike-info-container {
   flex: 1;
   text-align: center;
+  font-size: 0.85vw;
 }
 
 .helper {
@@ -49,4 +52,17 @@ export default {
     height: 100%;
     vertical-align: middle;
 }
+
+@media (min-width: 2000px) {
+  .bike-info-container {
+    font-size: 0.75vw;
+  }
+
+  .bike-image-container img {
+    max-height: 220px;
+    width: auto;
+  }
+
+}
+
 </style>
