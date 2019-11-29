@@ -60,6 +60,7 @@ export default {
 }
 
 .right-container {
+  height: 100%;
   margin: 10px 10px 10px 25px;
   border: 1px solid #D3D3D3;
   flex: 1;

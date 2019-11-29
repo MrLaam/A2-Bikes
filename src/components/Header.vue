@@ -1,14 +1,14 @@
 <template>
   <div class="header-container">
-    <h1 class="header-logo">A2 Bikes</h1>
+    <img class="header-logo" src="../assets/logo.png" />
     <label class="header-contact">Contact</label>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Header',
-}
+  name: "Header"
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -23,10 +23,10 @@ export default {
   .header-logo {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: black;
+    padding: 9px;
+    height: 80%;
     vertical-align: middle;
-    padding-top: 15px;
-    padding-bottom: 15px;
-     margin: 0
+     margin: 0;
   }
 
   .header-contact {
