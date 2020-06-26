@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <img class="header-logo" src="../assets/logo.png" />
+    <img class="header-logo" src="../assets/logo.png"  />
     <p class="header-about">Project by Jordan Lam</p>
   </div>
 </template>
